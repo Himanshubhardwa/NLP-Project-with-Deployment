@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 import pickle
 
 
@@ -24,9 +25,7 @@ class text_data(BaseModel):
 # home route
 @app.get("/")
 def home():
-    return {
-        'api' :'run succesfully '
-    }
+    return FileResponse("index.html")
 
 # predction api
 @app.post("/prediction")
