@@ -80,7 +80,7 @@
         async function predict() {
             let text = document.getElementById("inputtext").value;
 
-            let response = await fetch("https://nlp-project-with-deployment.onrender.com//prediction",{
+            let response = await fetch("https://nlp-project-with-deployment.onrender.com/prediction",{
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
