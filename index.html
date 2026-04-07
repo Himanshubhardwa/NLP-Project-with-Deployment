@@ -282,12 +282,12 @@ button:hover::after {
 
         <h3 id="result"></h3>
     </div>
-<!-- https://nlp-project-with-deployment.onrender.com/prediction -->
+<!--  -->
     <script>
     async function predict() {
     let text = document.getElementById("inputtext").value;
 
-    let response = await fetch("http://127.0.0.1:8000/prediction", {
+    let response = await fetch("https://nlp-project-with-deployment.onrender.com/prediction", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
