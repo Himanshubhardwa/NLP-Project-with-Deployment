@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Language Detector</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <style>
         /* 1. CSS Variables for easy customization */
@@ -281,24 +282,26 @@ button:hover::after {
 
         <h3 id="result"></h3>
     </div>
-
+<!-- https://nlp-project-with-deployment.onrender.com/prediction -->
     <script>
-        async function predict() {
-            let text = document.getElementById("inputtext").value;
+    async function predict() {
+    let text = document.getElementById("inputtext").value;
 
-            let response = await fetch("https://nlp-project-with-deployment.onrender.com/prediction",{
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ text: text })
-            });
+    let response = await fetch("http://127.0.0.1:8000/prediction", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text: text })
+    });
 
-            let data = await response.json();
+    let data = await response.json();
 
-            document.getElementById("result").innerText =
-                "Prediction: " + data.prediction;
-        }
+    let resultBox = document.getElementById("result");
+
+    resultBox.innerText = "Prediction: " + data.prediction;
+    resultBox.classList.add("visible");
+}
     </script>
 
 </body>
