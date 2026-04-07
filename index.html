@@ -6,60 +6,266 @@
     <title>Language Detector</title>
 
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
+        /* 1. CSS Variables for easy customization */
+:root {
+    --primary-color: #00c6ff;
+    --primary-hover: #0072ff;
+    --accent-color: #00ffcc;
+    --text-color: #ffffff;
+    --font-stack: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --radius: 16px;
+    --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    /* Flowing Gradient Colors */
+    --flow-color-1: #0f2027;
+    --flow-color-2: #203a43;
+    --flow-color-3: #2c5364;
+    --flow-color-4: #00c6ff;
+    --flow-color-5: #0072ff;
+}
 
-            /* Background Image */
-            background: url('https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1600') no-repeat center center/cover;
+/* 2. Reset & Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-            color: white;
-            text-align: center;
-        }
+body {
+    font-family: var(--font-stack);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Prevents scrollbars from animation */
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-        .container {
-            margin-top: 100px;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 30px;
-            border-radius: 15px;
-            display: inline-block;
-        }
+/* 3. Flowing Background Animation */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    
+    /* Multi-color flowing gradient */
+    background: linear-gradient(
+        135deg,
+        var(--flow-color-1),
+        var(--flow-color-2),
+        var(--flow-color-3),
+        var(--flow-color-4),
+        var(--flow-color-5)
+    );
+    background-size: 400% 400%;
+    
+    /* Smooth flowing animation */
+    animation: flowGradient 15s ease infinite;
+    
+    /* Soft blur for dreamy effect */
+    filter: blur(20px);
+}
 
-        h1 {
-            font-size: 40px;
-        }
+/* Optional: Add floating orbs for extra depth */
+body::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: -1;
+    background: radial-gradient(
+        circle at center,
+        rgba(0, 198, 255, 0.15) 0%,
+        transparent 70%
+    );
+    animation: floatOrb 20s ease-in-out infinite;
+    pointer-events: none;
+}
 
-        input {
-            padding: 12px;
-            width: 300px;
-            border-radius: 8px;
-            border: none;
-            margin-top: 15px;
-            font-size: 16px;
-        }
+/* 4. Keyframe Animations */
+@keyframes flowGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
 
-        button {
-            padding: 12px 20px;
-            margin-top: 15px;
-            border: none;
-            border-radius: 8px;
-            background: #00c6ff;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
+@keyframes floatOrb {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+        transform: translate(10%, 10%) rotate(90deg);
+    }
+    50% {
+        transform: translate(0, 20%) rotate(180deg);
+    }
+    75% {
+        transform: translate(-10%, 10%) rotate(270deg);
+    }
+}
 
-        button:hover {
-            background: #0072ff;
-        }
+/* 5. Glassmorphism Container */
+.container {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    
+    padding: 45px 40px;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    
+    width: 100%;
+    max-width: 440px;
+    text-align: center;
+    
+    animation: fadeInUp 0.7s ease-out;
+    position: relative;
+    z-index: 1;
+}
 
-        #result {
-            margin-top: 20px;
-            font-size: 22px;
-            font-weight: bold;
-            color: #00ffcc;
-        }
+/* 6. Typography */
+h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 0 28px 0;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #fff 0%, #00ffcc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* 7. Input Styling */
+input {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 16px;
+    border-radius: var(--radius);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    color: #1a1a2e;
+    outline: none;
+    transition: var(--transition);
+}
+
+input::placeholder {
+    color: #888;
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(0, 198, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* 8. Button Styling */
+button {
+    width: 100%;
+    padding: 16px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 198, 255, 0.4);
+}
+
+button:active {
+    transform: translateY(-1px);
+}
+
+/* Button shine effect */
+button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.5s;
+}
+
+button:hover::after {
+    left: 100%;
+}
+
+/* 9. Result Area */
+#result {
+    margin-top: 28px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    min-height: 1.5em;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: var(--transition);
+}
+
+#result.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 10. Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 11. Responsive Design */
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 24px;
+        width: 92%;
+        margin: 20px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    input, button {
+        padding: 14px 16px;
+    }
+}
     </style>
 </head>
 
@@ -80,7 +286,7 @@
         async function predict() {
             let text = document.getElementById("inputtext").value;
 
-            let response = await fetch("https://nlp-project-with-deployment.onrender.com//prediction",{
+            let response = await fetch("https://nlp-project-with-deployment.onrender.com/prediction",{
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
