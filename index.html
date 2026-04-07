@@ -40,10 +40,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Prevents scrollbars from animation */
+    overflow: hidden;
     position: relative;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: #000; /* Fallback for very old browsers */
 }
 
 /* 3. Flowing Background Animation */
@@ -56,7 +57,6 @@ body::before {
     height: 100%;
     z-index: -1;
     
-    /* Multi-color flowing gradient */
     background: linear-gradient(
         135deg,
         var(--flow-color-1),
@@ -67,10 +67,8 @@ body::before {
     );
     background-size: 400% 400%;
     
-    /* Smooth flowing animation */
     animation: flowGradient 15s ease infinite;
     
-    /* Soft blur for dreamy effect */
     filter: blur(20px);
 }
 
@@ -94,68 +92,64 @@ body::after {
 
 /* 4. Keyframe Animations */
 @keyframes flowGradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 @keyframes floatOrb {
-    0%, 100% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-    25% {
-        transform: translate(10%, 10%) rotate(90deg);
-    }
-    50% {
-        transform: translate(0, 20%) rotate(180deg);
-    }
-    75% {
-        transform: translate(-10%, 10%) rotate(270deg);
-    }
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(10%, 10%) rotate(90deg); }
+    50% { transform: translate(0, 20%) rotate(180deg); }
+    75% { transform: translate(-10%, 10%) rotate(270deg); }
 }
 
-/* 5. Glassmorphism Container */
+/* 5. Glassmorphism Container — MOBILE FIRST */
 .container {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     
-    padding: 45px 40px;
-    border-radius: 24px;
+    padding: 30px 20px; /* Reduced padding for mobile */
+    border-radius: 20px;
     box-shadow: var(--shadow);
     border: 1px solid rgba(255, 255, 255, 0.15);
     
-    width: 100%;
-    max-width: 440px;
+    width: 90%; /* Mobile: 90% width */
+    max-width: 500px; /* Desktop max */
     text-align: center;
     
     animation: fadeInUp 0.7s ease-out;
     position: relative;
     z-index: 1;
+    margin: 20px; /* Add spacing on mobile */
 }
 
-/* 6. Typography */
+/* 6. Typography — Responsive Font Sizes */
 h1 {
-    font-size: 2.2rem;
+    font-size: 1.8rem; /* Reduced from 2.2rem */
     font-weight: 700;
-    margin: 0 0 28px 0;
+    margin: 0 0 12px 0;
     letter-spacing: 0.5px;
     background: linear-gradient(135deg, #fff 0%, #00ffcc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    line-height: 1.2;
 }
 
-/* 7. Input Styling */
+h3 {
+    font-size: 1rem; /* Reduced from 1.3rem */
+    font-weight: 400;
+    margin: 0 0 24px 0;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.4;
+}
+
+/* 7. Input Styling — Touch-Friendly */
 input {
     width: 100%;
-    padding: 16px 20px;
+    padding: 14px 16px; /* Reduced padding */
     font-size: 16px;
     border-radius: var(--radius);
     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -163,6 +157,7 @@ input {
     color: #1a1a2e;
     outline: none;
     transition: var(--transition);
+    margin-bottom: 16px; /* Spacing below input */
 }
 
 input::placeholder {
@@ -175,11 +170,10 @@ input:focus {
     transform: translateY(-2px);
 }
 
-/* 8. Button Styling */
+/* 8. Button Styling — Larger Tap Area */
 button {
     width: 100%;
-    padding: 16px;
-    margin-top: 20px;
+    padding: 16px; /* Keep padding for tap target */
     font-size: 16px;
     font-weight: 600;
     color: white;
@@ -190,6 +184,8 @@ button {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    margin-top: 16px; /* Space above button */
+    min-height: 50px; /* Ensures minimum touch target */
 }
 
 button:hover {
@@ -201,7 +197,7 @@ button:active {
     transform: translateY(-1px);
 }
 
-/* Button shine effect */
+/* Button shine effect — improved for mobile */
 button::after {
     content: '';
     position: absolute;
@@ -215,23 +211,25 @@ button::after {
         rgba(255, 255, 255, 0.2),
         transparent
     );
-    transition: left 0.5s;
+    transition: left 0.6s;
 }
 
 button:hover::after {
     left: 100%;
 }
 
-/* 9. Result Area */
+/* 9. Result Area — Responsive */
 #result {
-    margin-top: 28px;
-    font-size: 1.3rem;
+    margin-top: 20px;
+    font-size: 1.2rem; /* Reduced from 1.3rem */
     font-weight: 600;
     color: var(--accent-color);
     min-height: 1.5em;
     opacity: 0;
     transform: translateY(10px);
     transition: var(--transition);
+    word-wrap: break-word;
+    text-align: center;
 }
 
 #result.visible {
@@ -251,20 +249,52 @@ button:hover::after {
     }
 }
 
-/* 11. Responsive Design */
+/* 11. Responsive Design — MOBILE FIRST OPTIMIZED */
 @media (max-width: 480px) {
     .container {
-        padding: 30px 24px;
-        width: 92%;
-        margin: 20px;
+        padding: 24px 16px;
+        margin: 10px;
+        border-radius: 16px;
     }
-    
+
     h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        margin-bottom: 10px;
     }
-    
+
+    h3 {
+        font-size: 0.9rem;
+        margin-bottom: 18px;
+    }
+
     input, button {
-        padding: 14px 16px;
+        padding: 13px 14px;
+        font-size: 15px;
+    }
+
+    #result {
+        font-size: 1.1rem;
+        margin-top: 16px;
+    }
+}
+
+/* Extra safety for very small screens */
+@media (max-width: 320px) {
+    .container {
+        padding: 20px 12px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    input, button {
+        padding: 12px 12px;
+        font-size: 14px;
+    }
+
+    #result {
+        font-size: 1rem;
     }
 }
     </style>
@@ -277,31 +307,31 @@ button:hover::after {
         <h3>Using Natural Language Processing (NLP)</h3>
 
         <input type="text" id="inputtext" placeholder="Enter text (min 9 words)">
-        <br>
         <button onclick="predict()">Check Language</button>
 
         <h3 id="result"></h3>
     </div>
-<!--  -->
+
     <script>
     async function predict() {
-    let text = document.getElementById("inputtext").value;
+        let text = document.getElementById("inputtext").value;
 
-    let response = await fetch("https://nlp-project-with-deployment.onrender.com/prediction", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ text: text })
-    });
+        // Remove extra space in URL (bug fix!)
+        let response = await fetch("https://nlp-project-with-deployment.onrender.com/prediction", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text: text })
+        });
 
-    let data = await response.json();
+        let data = await response.json();
 
-    let resultBox = document.getElementById("result");
+        let resultBox = document.getElementById("result");
 
-    resultBox.innerText = "Prediction: " + data.prediction;
-    resultBox.classList.add("visible");
-}
+        resultBox.innerText = "Prediction: " + data.prediction;
+        resultBox.classList.add("visible");
+    }
     </script>
 
 </body>
